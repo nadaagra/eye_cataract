@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
@@ -9,6 +9,11 @@ app = Flask(__name__)
 
 # Load the trained model
 model = load_model('cataract_detection_model.h5')
+
+# Define route for home page
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 # Define route for predicting cataract
 @app.route('/predict', methods=['POST'])
@@ -43,5 +48,4 @@ def predict_cataract():
 
 # Run the Flask application
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port="5000")
-
+    app.run(host="0.0.0.0", port="5000")
